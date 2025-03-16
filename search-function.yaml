@@ -15,3 +15,5 @@ Resources:
       MemorySize: 128
       Timeout: 300
       Role: 'arn:aws:iam::910225201006:role/service-role/search-role-6dfow9gy'
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain 
