@@ -5,11 +5,17 @@ phases:
       python: 3.10
   build:
     commands:
+      - echo "Zipping the Lambda code"
+      - zip -r /tmp/lambda-code.zip .  # Zip all files in the current directory into a zip file
+      - echo "Zipped Lambda function code"
+      - ls -l /tmp/lambda-code.zip  # List the file to confirm it's zipped
+      - echo "Uploading zipped code to S3"
+      - aws s3 cp /tmp/lambda-code.zip s3://artifacts-bucket-gb/lambda-code.zip  # Upload the zip file to S3
       - echo "Running CloudFormation package command"
       - aws cloudformation package --template-file search-function.yaml --s3-bucket artifacts-bucket-gb --output-template-file /tmp/packaged-template.yaml
       - echo "Checking if packaged template exists"
       - ls -l /tmp/packaged-template.yaml
-      - echo "Uploading to S3"
+      - echo "Uploading packaged template to S3"
       - aws s3 cp /tmp/packaged-template.yaml s3://artifacts-bucket-gb/packaged-template.yaml
       - aws cloudformation deploy --template-file /tmp/packaged-template.yaml --stack-name SearchFunctionStack --capabilities CAPABILITY_IAM
 artifacts:
