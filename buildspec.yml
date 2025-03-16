@@ -5,7 +5,7 @@ phases:
       python: 3.10
   build:
     commands:
-      - aws cloudformation package --template-file search-gateway.yaml --s3-bucket artifacts-bucket-gb --output-template-file gateway.yaml
+      - aws cloudformation package --template-file search-function.yaml --s3-bucket artifacts-bucket-gb --output-template-file gateway.yaml
 
 artifacts:
   type: zip

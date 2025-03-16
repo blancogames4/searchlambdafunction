@@ -5,10 +5,10 @@ Resources:
   searchgateway:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Handler: sample.lambda_handler
+      Handler: lambda_function.lambda_handler
       Runtime: python3.9
       CodeUri: .
       Description: ''
       MemorySize: 128
       Timeout: 300
-      Role: 'arn:aws:iam::844028273225:role/lambda_s3'
+      Role: 'arn:aws:iam::910225201006:role/service-role/search-role-6dfow9gy'
