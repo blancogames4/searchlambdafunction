@@ -8,7 +8,7 @@ Resources:
       FunctionName: search
       Handler: lambda_function.lambda_handler
       Runtime: python3.9
-      CodeUri: 
+      Code: 
         S3Bucket: artifacts-bucket-gb
         S3Key: packaged-template.yaml.zip
       Description: ''
