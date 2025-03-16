@@ -10,7 +10,7 @@ Resources:
       Runtime: python3.9
       Code: 
         S3Bucket: artifacts-bucket-gb
-        S3Key: packaged-template.yaml
+        S3Key: lambda-code.zip
       Description: ''
       MemorySize: 128
       Timeout: 300
