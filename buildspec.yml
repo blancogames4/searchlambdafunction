@@ -5,7 +5,7 @@ phases:
       python: 3.10
   build:
     commands:
-      - aws cloudformation package --template-file search-function.yaml --s3-bucket artifacts-bucket-gb --output-template-file packaged-template.yamll
+      - aws cloudformation package --template-file search-function.yaml --s3-bucket artifacts-bucket-gb --output-template-file packaged-template.yaml
       - aws cloudformation deploy --template-file packaged-template.yaml --stack-name SearchFunctionStack --capabilities CAPABILITY_IAM
 
 artifacts:
