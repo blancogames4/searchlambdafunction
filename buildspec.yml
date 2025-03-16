@@ -5,10 +5,13 @@ phases:
       python: 3.10
   build:
     commands:
-      - aws cloudformation package --template-file search-function.yaml --s3-bucket artifacts-bucket-gb --output-template-file packaged-template.yaml
-      
-
+      - echo "Running CloudFormation package command"
+      - aws cloudformation package --template-file search-function.yaml --s3-bucket artifacts-bucket-gb --output-template-file /tmp/packaged-template.yaml
+      - echo "Checking if packaged template exists"
+      - ls -l /tmp/packaged-template.yaml
+      - echo "Uploading to S3"
+      - aws s3 cp /tmp/packaged-template.yaml s3://artifacts-bucket-gb/packaged-template.yaml
+      - aws cloudformation deploy --template-file /tmp/packaged-template.yaml --stack-name SearchFunctionStack --capabilities CAPABILITY_IAM
 artifacts:
-  type: zip
   files:
-    - packaged-template.yaml
+    - /tmp/packaged-template.yaml
