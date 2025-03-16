@@ -5,31 +5,34 @@ import base64
 import urllib.parse
 import json
 
-region = 'ap-northeast-1'
+region = 'us-east-1'
 service = 'es'
 credentials = boto3.Session().get_credentials()
 awsauth = AWS4Auth(credentials.access_key, credentials.secret_key, region, service, session_token=credentials.token)
-host = 'https://search-mygoogle-74xgfxo3qbqg4mmm5zzt3a3uye.ap-northeast-1.es.amazonaws.com'
+host = 'https://vpc-pdfexerciseforopensearch-jjx2k7zzgm3mwvq3olbujpni3q.us-east-1.es.amazonaws.com'
 index = 'mygoogle'
 url = host + '/' + index + '/_search'
 def get_from_Search(query):
-    
     headers = { "Content-Type": "application/json" }
 
-    r = requests.get(url, auth=awsauth, headers=headers, data=json.dumps(query))
+    try:
+        print("Sending request to OpenSearch...")
+        r = requests.get(url, auth=awsauth, headers=headers, data=json.dumps(query))
+        
+        print("Received response from OpenSearch.")
+        print("Status Code:", r.status_code)
 
-    response = {
-        "statusCode": 200,
-        "headers": {
-            "Access-Control-Allow-Origin": '*'
-        },
-        "isBase64Encoded": False
-    }
+        if r.status_code != 200:
+            print("Error response:", r.text)
+            return json.dumps({"error": "Failed to fetch data from OpenSearch", "status_code": r.status_code, "details": r.text})
 
-    response['body'] = r.text
-    body=r.text
-    response_json=json.dumps(body);
-    return body
+        print("OpenSearch Response Body:", r.text)  # Print raw response
+        return r.text
+
+    except Exception as e:
+        print("Exception during OpenSearch request:", str(e))
+        return json.dumps({"error": "Request to OpenSearch failed", "exception": str(e)})
+
 
 
 def lambda_handler(event, context):
